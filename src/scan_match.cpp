@@ -8,7 +8,7 @@ cScanMatch::cScanMatch() {
   // sm_debug_write(1); // UNCOMMENT THIS FOR VISUALIZING DEBUG INFORMATION
 
   params.max_angular_correction_deg = 10.0;
-  params.max_linear_correction = 0.05;
+  params.max_linear_correction = 0.2;
   params.max_iterations = 1000;
   params.epsilon_xy = 0.000001;
   params.epsilon_theta = 0.000001;
@@ -136,8 +136,8 @@ void cScanMatch::match(const std::vector<messageIO::laserScanData> &scan,
      *
      */
 
-    last_odom.x = results.x[0] + scan_odom.back().x * cos(results.x[2]) - scan_odom.back().y * sin(results.x[2]);
-    last_odom.y = results.x[1] + scan_odom.back().x * sin(results.x[2]) + scan_odom.back().y * cos(results.x[2]);
+    last_odom.x = scan_odom.back().x  + results.x[0] * cos(results.x[2]) - results.x[1] * sin(results.x[2]);
+    last_odom.y = scan_odom.back().y  + results.x[0]* sin(results.x[2]) +results.x[1] * cos(results.x[2]);
     last_odom.theta = rad_fix(results.x[2], scan_odom.back().theta);
     last_odom.nvalid = results.nvalid;
     last_odom.iterations = results.iterations;

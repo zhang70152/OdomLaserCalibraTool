@@ -18,7 +18,7 @@ void cSolver::calib(std::vector<cSynchronizer::sync_data> &calib_data, int outli
     calib_history[iteration] = calib_data;
 
     // Calibration
-    if (!solve(calib_data, 0, 75, res))
+    if (!solve(calib_data, 0, 500, res))
     {
       std::cout << colouredString("Failed calibration.", RED, BOLD) << std::endl;
       continue;
@@ -158,7 +158,7 @@ bool cSolver::solve(const std::vector<cSynchronizer::sync_data> &calib_data,
   double cond = svd.singularValues()(0) / svd.singularValues()(svd.singularValues().size() - 1);
   if (cond > max_cond_number)
   {
-    std::cout << colouredString("Matrix A is almost singular.", RED, BOLD) << std::endl;
+    std::cout << colouredString("Matrix A is almost singular.", RED, BOLD) <<" cond:"<<cond<< std::endl;
     return 0;
   }
 
